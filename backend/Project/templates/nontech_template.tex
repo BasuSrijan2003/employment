@@ -1,0 +1,18 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,bottom=0.6in,left=0.75in,right=0.75in,top=1cm]{geometry}
+\usepackage{graphicx, amsmath, array, enumitem, wrapfig, microtype, titlesec, textcomp, hyperref, fontawesome5, color}
+\definecolor{myblue}{RGB}{76,81,150}
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\color{myblue}\vspace{-2pt}\rule{\linewidth}{0.5pt}\vspace{-4pt}]
+\pagenumbering{gobble}
+\newcommand{\headerinfo}[3]{
+  \begin{center} {\Huge \bfseries #1} \\ \vspace{2pt}
+  {#2} \\ \vspace{1pt} {#3} \end{center} \hrule \vspace{0.2cm}
+}
+\begin{document}
+\headerinfo{Your Name}{\faMobile\ +91-XXXXX XXXXX | \faEnvelope\ your@email.com}{\faLinkedin\ linkedin.com/in/yourprofile}
+\section*{Achievements}
+\begin{itemize}
+\item Achievement 1
+\item Achievement 2
+\end{itemize}
+\end{document}

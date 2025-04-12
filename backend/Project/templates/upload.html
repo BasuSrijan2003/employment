@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CV to LaTeX Converter</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        select, input[type="file"] { width: 100%; padding: 8px; }
+        button { background: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Upload Your CV</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-success">
+          {{ messages[0] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Select PDF CV:</label>
+            <input type="file" name="file" id="file" accept=".pdf" required>
+        </div>
+        <div class="form-group">
+            <label for="template">Select Template:</label>
+            <select name="template" id="template">
+                <option value="iit">IIT Style</option>
+                <option value="iim">IIM Style</option>
+                <option value="software">Software Engineer</option>
+                <option value="non-tech">Non-Technical</option>
+                <option value="off-campus">Off-Campus</option>
+            </select>
+        </div>
+        <button type="submit">Convert to LaTeX PDF</button>
+    </form>
+    <script>
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('file');
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Highlight drop area when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropArea.classList.add('highlight');
+        }
+
+        function unhighlight() {
+            dropArea.classList.remove('highlight');
+        }
+
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            
+            // Update UI to show file name
+            if (files.length > 0) {
+                document.querySelector('.drop-message').textContent = files[0].name;
+            }
+        }
+    </script>
+</body>
+</html>

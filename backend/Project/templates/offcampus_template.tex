@@ -1,0 +1,20 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym, xcolor, float, ragged2e, fullpage, wrapfig, lipsum, tabularx, titlesec, geometry, marvosym, verbatim, enumitem, hyperref, fancyhdr, multicol, graphicx, fontawesome5, tcolorbox}
+\geometry{left=0.85cm, top=0.8cm, right=0.85cm, bottom=0.2cm}
+\titleformat{\section}{\scshape\raggedright\large}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+\newcommand{\resumePOR}[3]{ \item[] \textbf{#1}: {#2} \hfill \footnotesize{#3} }
+\newcommand{\resumeEdu}[4]{ \item[] \textbf{#1} \hfill \footnotesize{#3} \\ #2 \hfill \footnotesize{#4} }
+\newcommand{\resumeItem}[1]{ \item #1 }
+\begin{document}
+\newcommand{\name}{Your Name}
+\newcommand{\emaila}{your@email.com}
+\newcommand{\phone}{1234567890}
+\newcommand{\linkedin}{linkedinprofile}
+\begin{center}
+\Large{\name} \\ \small \href{mailto:\emaila}{\faEnvelope\ \emaila} $|$ \faPhone\ \phone $|$ \faLinkedin\ linkedin.com/in/\linkedin
+\end{center}
+\section*{Education}
+\begin{itemize}
+\resumeEdu{Institute Name}{Degree Name}{2018 - 2022}{GPA: x.xx}
+\end{itemize}
+\end{document}

@@ -1,0 +1,236 @@
+iim_latex = r"""\documentclass[11pt]{article}
+# ... (rest of iim_latex template remains the same) ...
+\usepackage{graphicx} \usepackage[left=1.06cm,top=1.7cm,right=1.06cm,bottom=0.49cm]{geometry}
+\usepackage{hyperref} \usepackage{enumitem} \usepackage[utf8]{inputenc} \usepackage[T1]{fontenc} \setlength{\parindent}{0pt}
+\begin{document}
+\begin{center} \textbf{Firstname Lastname}\\ \hrulefill \end{center}
+\begin{center} Home or Campus Street Address \textbullet \ City, State Zip \textbullet \ youremail@college.harvard.edu \textbullet \ phone number \end{center}
+\vspace{0.5pt}
+\begin{center} \textbf{Education} \end{center}
+\textbf{Harvard University} \hfill Cambridge, MA Degree, Concentration. GPA [Note: GPA is Optional] \hfill Graduation Date Thesis [Note: Optional] Relevant Coursework: [Note: Optional. Awards and honors can also be listed here.]
+\vspace{12pt} \textbf{Study Abroad} [Note: If Applicable] \hfill City, Country Study abroad coursework in   . \hfill\tMonth Year – Month Year
+\vspace{12pt} \textbf{High School Name} \hfill\tCity, State [Note: May include GPA, SAT/ACT scores, or academic honors an employer may want to know] \hfill Graduation Date
+\vspace{12pt} \begin{center} \textbf{Experience} \end{center}
+\textbf{Organization} \hfill City, State (or Remote) \textbf{Position Title} \hfill Month Year – Month Year
+\begin{itemize}[noitemsep, topsep=0pt, partopsep=0pt, parsep=0pt] \item Beginning with your most recent position, describe your experience, skills, and resulting outcomes in bullet or paragraph form. \item Begin each line with an action verb and include details that will help the reader understand your accomplishments, skills, knowledge, abilities, or achievements. \item Quantify where possible. \item Do not use personal pronouns; each line should be a phrase rather than a full sentence. \end{itemize}
+\vspace{12pt} \textbf{Organization} \hfill City, State (or Remote) \textbf{Position Title} \hfill Month Year – Month Year
+\begin{itemize}[noitemsep, topsep=0pt, partopsep=0pt, parsep=0pt] \item With your next-most recent position, describe your experience, skills, and resulting outcomes in bullet or paragraph form. \item Begin each line with an action verb and include details that will help the reader understand your accomplishments, skills, knowledge, abilities, or achievements. \item Quantify where possible. \item Do not use personal pronouns; each line should be a phrase rather than a full sentence. \end{itemize}
+\begin{center} \textbf{Leadership \& Activities} \end{center}
+\textbf{Organization}\t\hfill City, State \textbf{Role} \hfill Month Year – Month Year
+\begin{itemize}[noitemsep, topsep=0pt, partopsep=0pt, parsep=0pt] \item This section can be formatted similarly to the Experience section, or you can omit descriptions for activities. \item If this section is more relevant to the opportunity you are applying for, consider moving this above your Experience section. \end{itemize}
+\begin{center} \textbf{Skills \& Interests [Note: Optional]} \end{center}
+\textbf{Technical:} List computer software and programming languages \textbf{Language:} List foreign languages and your level of fluency \textbf{Laboratory:} List scientific / research lab techniques or tools [If Applicable] \textbf{Interests:} List activities you enjoy that may spark interview conversation
+\end{document}
+"""
+
+iit_latex = r"""% iit_latex (Example Adjustments)
+\documentclass[a4paper,10pt]{article}
+# ... (rest of iit_latex template remains the same) ...
+\usepackage[top=0.75in, bottom=0.75in, left=0.55in, right=0.85in]{geometry} \usepackage{graphicx} \usepackage{url} \usepackage{hyperref} \hypersetup{ colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=blue, } \usepackage{palatino} \usepackage{tabularx} \fontfamily{SansSerif}\selectfont \usepackage[T1]{fontenc} \usepackage[utf8]{inputenc} \usepackage{color} \definecolor{mygrey}{gray}{0.85} \textheight=9.75in \raggedbottom \sloppy \setlength{\tabcolsep}{0in} \newcommand{\isep}{-2pt} \newcommand{\lsep}{2pt} \newcommand{\psep}{4pt} \renewcommand{\labelitemii}{$\circ$} \usepackage{enumitem} \setlist{nosep} \pagestyle{empty} \newcommand{\resitem}[1]{\item #1 \vspace{\isep}} \newcommand{\resheading}[1]{ \vspace{\lsep} {\small \colorbox{mygrey}{\begin{minipage}{0.975\textwidth}{\textbf{#1 \vphantom{p^{E}}}}\end{minipage}}} \vspace{\psep} } \newcommand{\ressubheading}[3]{ \begin{tabular*}{6.62in}{l @{\extracolsep{\fill}} r} \textsc{{\textbf{#1}}} & \textsc{\textit{[#2]}} \\ \end{tabular*}\vspace{-8pt}}
+\begin{document}
+\vspace*{-0.2cm} \begin{center} {\fontsize{14pt}{16pt}\selectfont \textbf{<Your Name>}} \\ \vspace{2pt} <Street Address>, <City>, <State> (<Country>) - <Zip Code> \\ \vspace{1pt} Email: \href{mailto:someone@email.com}{\textbf{someone@email.com}} $|$ Mobile: \textbf{1234567890} $|$ Alt Mobile: \textbf{1234567890} \end{center} \vspace{0.1cm}
+\resheading{\textbf{ACADEMIC DETAILS}} \begin{tabularx}{\textwidth}{X l l l l} \hline \textbf{Examination/Degree} & \textbf{University/Board} & \textbf{Institute} & \textbf{Year} & \textbf{CPI/\%} \\ \hline Post Graduation (M.Tech) & IIT Bombay & IIT Bombay & 2014 & 8.0 \\ \textit{Specialization:} & \multicolumn{4}{l}{\textit{Computer Science and Engineering}} \\ \\ Graduation (B.E.) & DAVV, Indore & IET-DAVV, Indore & 2012 & 76.5\\ \textit{Specialization:} & \multicolumn{4}{l}{\textit{Computer Engineering}} \\ \hline \end{tabularx} \vspace{\baselineskip}
+\resheading{\textbf{FIELDS OF INTEREST}} \begin{itemize} \resitem{Wireless Network and Network Security, Another one, a third one} \end{itemize} \vspace{\baselineskip}
+\resheading{\textbf{TECHNICAL SKILLS}} \begin{itemize} \resitem{\textbf{Languages:} C, C++, Java} \resitem{\textbf{Database:} MySQL} \resitem{\textbf{Scripting:} Python, Shell, Perl, R} \resitem{\textbf{Tools:} Eclipse, \LaTeX, Gnuplot, Rstudio} \end{itemize} \vspace{\baselineskip}
+\resheading{\textbf{MAJOR PROJECTS AND SEMINAR}} \begin{itemize} \item \textbf{Media Access Control Controlling} (Research Project) \\ \textit{(Guide: Prof. Hubert F., May'13 - till date)} \\[-0.4cm] \begin{itemize} \resitem{Objective: Performance analysis of HTTP web browsing traffic.} \resitem{Performance analysis will help in comparing different MAC protocols based on different network scenarios.} \resitem{Studied various papers related to different MAC protocols and now working on improving simulations.} \end{itemize} \vspace{0.5\baselineskip} \item \textbf{Second Item.} (M. Tech. Seminar) \\ \textit{(Guide: Prof. John Doe, Jan'14 - Aug'14)} \\[-0.4cm] \begin{itemize} \resitem{First subitem.} \resitem{Second subitem.} \end{itemize} \end{itemize} \vspace{\baselineskip}
+\resheading{\textbf{STRENGTHS}} \begin{itemize} \resitem{Positive Attitude, Social Interaction, Hardworking.} \end{itemize} \vspace{\baselineskip}
+\resheading{\textbf{INTEREST AND HOBBIES}} \begin{itemize} \resitem{Solving Puzzles.} \resitem{Playing Chess.} \end{itemize} \vspace{\baselineskip}
+\end{document}
+"""
+
+software_latex = r"""\documentclass[letterpaper,11pt]{article}
+# ... (rest of software_latex template remains the same) ...
+\usepackage{latexsym} \usepackage[empty]{fullpage} \usepackage{titlesec} \usepackage{marvosym} \usepackage[usenames,dvipsnames]{color} \usepackage{verbatim} \usepackage{enumitem} \usepackage[hidelinks]{hyperref} \usepackage[english]{babel} \usepackage{tabularx} \usepackage{fontawesome5} \usepackage{multicol} \usepackage{graphicx} \setlength{\multicolsep}{-3.0pt} \setlength{\columnsep}{-1pt} \input{glyphtounicode} \RequirePackage{tikz} \RequirePackage{xcolor} \definecolor{cvblue}{HTML}{0E5484} \definecolor{black}{HTML}{130810} \definecolor{darkcolor}{HTML}{0F4539} \definecolor{cvgreen}{HTML}{3BD80D} \definecolor{taggreen}{HTML}{00E278} \definecolor{SlateGrey}{HTML}{2E2E2E} \definecolor{LightGrey}{HTML}{666666} \colorlet{name}{black} \colorlet{tagline}{darkcolor} \colorlet{heading}{darkcolor} \colorlet{headingrule}{cvblue} \colorlet{accent}{darkcolor} \colorlet{emphasis}{SlateGrey} \colorlet{body}{LightGrey} \usepackage{charter} \usepackage[T1]{fontenc} \addtolength{\oddsidemargin}{-0.6in} \addtolength{\evensidemargin}{-0.5in} \addtolength{\textwidth}{1.19in} \addtolength{\topmargin}{-.7in} \addtolength{\textheight}{1.4in} \urlstyle{same} \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66} \raggedbottom \raggedright \setlength{\tabcolsep}{0in} \titleformat{\section}{ \vspace{-4pt}\scshape\raggedright\large\bfseries }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}] \pdfgentounicode=1 \newcommand{\resumeItem}[1]{ \item\small{ {#1 \vspace{-1pt}} } } \newcommand{\classesList}[4]{ \item\small{ {#1 #2 #3 #4 \vspace{-2pt}} } } \newcommand{\resumeSubheading}[4]{ \vspace{-2pt}\item \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r} \textbf{\large#1} & \textbf{\small #2} \\ \textit{\large#3} & \textit{\small #4} \\ \end{tabular*}\vspace{-7pt} } \newcommand{\resumeSingleSubheading}[4]{ \vspace{-2pt}\item \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r} \textbf{\large#1} & \textbf{\small #2} \\ \end{tabular*}\vspace{-7pt} } \newcommand{\resumeSubSubheading}[2]{ \item \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r} \textit{\small#1} & \textit{\small #2} \\ \end{tabular*}\vspace{-7pt} } \newcommand{\resumeProjectHeading}[2]{ \item \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r} \small#1 & \textbf{\small #2}\\ \end{tabular*}\vspace{-7pt} } \newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}} \renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$} \renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$} \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]} \newcommand{\resumeSubHeadingListEnd}{\end{itemize}} \newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.1in]} \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}} \newcommand\sbullet[1][.5]{\mathbin{\vcenter{\hbox{\scalebox{#1}{$\bullet$}}}}}
+\begin{document}
+\begin{center} {\huge Full Name} \\ \vspace{2pt} {+1 (xxx) xxx xxxx} ~ \small{-} \href{[url to portfolio]}{\color{blue}{Portfolio}} ~ \small{-} \href{mailto:[enter your email id]}{\color{blue}{xxxx@gmail.com}} ~ \small{-} \href{[url to linkedin profile]}{ \color{blue}{linkedin.com/in/username}}  ~ \small{-} \href{[url to github profile]}{ \color{blue}{github.com/username}} ~ \vspace{-7pt} \end{center}
+\section{\color{airforceblue}EDUCATION} \resumeSubHeadingListStart \resumeSubheading {University 1}{Location, State, USA} {Degree and Specialization}{Month Year - Month Year} \vspace{-4pt} \resumeSubheading {University 2}{Location, State, USA} {Degree and Specialization}{Month Year - Month Year} \resumeSubHeadingListEnd \vspace{-10pt}
+\section{\color{airforceblue}TECHNICAL SKILLS} \begin{itemize}[leftmargin=0in, label={}] \small{\item{ \textbf{\normalsize{Programming Languages:}}{ \normalsize{Python, C++}} \\ \vspace{1.2pt} \textbf{\normalsize{Libraries and Tools:}}{ \normalsize{PyTorch,  Sklearn, Pandas, Numpy, OpenCV, Git, Docker}} \\ \vspace{1.2pt} \textbf{\normalsize{ML Architectures:}}{ \normalsize{CNN, YOLO, Transformers(BERT, LSTM), RAFT}} }} \end{itemize} \vspace{-16pt}
+\section{\color{airforceblue}WORK EXPERIENCE} \resumeSubHeadingListStart \resumeSubheading {Job 1 Title}{} {Company Name, State, Country}{Month Year - Month Year} \resumeItemListStart \resumeItem{\normalsize{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac justo eget nunc ultricies congue.}} \resumeItem{\normalsize{nteger hendrerit semper velit, non vehicula nibh feugiat nec. Vivamus nec consequat nisi.}} \resumeItem{\normalsize{Sed nec quam et urna placerat placerat. Aenean at mi id nunc venenatis feugiat}} \resumeItemListEnd \resumeSubheading {Job 2 Title}{} {Company Name, State, Country}{Month Year - Month Year} \resumeItemListStart \resumeItem{\normalsize{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac justo eget nunc ultricies congue.}} \resumeItem{\normalsize{nteger hendrerit semper velit, non vehicula nibh feugiat nec. Vivamus nec consequat nisi.}} \resumeItem{\normalsize{Sed nec quam et urna placerat placerat. Aenean at mi id nunc venenatis feugiat}} \resumeItemListEnd \resumeSubheading {Job 3 Title}{} {Company Name, State, Country}{Month Year - Month Year} \resumeItemListStart \resumeItem{\normalsize{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac justo eget nunc ultricies congue.}} \resumeItem{\normalsize{nteger hendrerit semper velit, non vehicula nibh feugiat nec. Vivamus nec consequat nisi.}} \resumeItem{\normalsize{Sed nec quam et urna placerat placerat. Aenean at mi id nunc venenatis feugiat}} \resumeItemListEnd \resumeSubHeadingListEnd \vspace{-12pt}
+\section{\color{airforceblue}PROJECTS} \resumeItemListStart \vspace{0.5pt} \resumeItem{\normalsize{\textbf{Project 1 title}, Lorem ipsum dolor sit amet, consectetur adipiscing elit.} \href{[url to project github repo]}{\color{blue}\underline{GitHub}}} \vspace{-5pt} \resumeItem{\normalsize{\textbf{Project 2 title}, Vivamus nec consequat nisi. Suspendisse potenti.} \href{[url to project demo]}{\color{blue}\underline{Try it!}}} \vspace{-5pt} \resumeItem{\normalsize{\textbf{Project 3 title}, Cras dignissim justo vitae dui vehicula, sed malesuada risus semper.}  \href{[url to github repo]}{\color{blue}\underline{GitHub}}} \vspace{-5pt} \resumeItem{\normalsize{\textbf{Project 4 title}, Sed sagittis consectetur eros, eu auctor felis lobortis vel.} \href{[url to project demo]}{\color{blue}\underline{Try it!}}} \resumeItemListEnd \vspace{-12pt}
+\section{\color{airforceblue}PUBLICATIONS} \resumeItemListStart \resumeItem{\normalsize{Add Publication details here}}\href{[url link to publication]}{\color{blue}\underline{Link}} \vspace{-5pt} \resumeItem{\normalsize{Add Publication details here}}\href{[url link to publication]}{\color{blue}\underline{Link}} \vspace{-5pt} \resumeItemListEnd \vspace{-8pt}
+\section{\color{airforceblue}EXTRACURRICULAR ACTIVITIES} \resumeItemListStart \resumeItem{\normalsize{\textbf{Event Coordinator} in univesrity Club - {Month Year - Month Year} }} \vspace{-5pt} \resumeItem{\normalsize{\textbf{Executive member} in Robotics Club - } {Month Year - Month Year}} \vspace{-5pt} \resumeItemListEnd \vspace{-12pt}
+\end{document}
+"""
+
+non_tech_latex = r"""\documentclass[10pt]{article}
+# Uses standard article class, easier to handle than moderncv initially
+\usepackage[a4paper,bottom=0.6in,left=0.75in,right=0.75in,top=1cm]{geometry}
+\usepackage{graphicx} \usepackage{amsmath} \usepackage{array} \usepackage{enumitem} \usepackage{wrapfig} \usepackage{microtype} \usepackage{titlesec} \usepackage{textcomp} \usepackage[colorlinks=false, hidelinks]{hyperref} % Added hidelinks
+\usepackage{verbatim} \usepackage{makecell} \usepackage{pbox} \usepackage{fontawesome5} % Changed to fontawesome5
+
+%for color
+\usepackage[usenames, dvipsnames]{color}
+\definecolor{myblue}{RGB}{76,81,150}
+
+\newcommand{\xfilll}[2][1ex]{ \dimen0=#2\advance\dimen0 by #1 \leaders\hrule height \dimen0 depth -#1\hfill}
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{} [\color{myblue} \vspace{-2pt} \rule{\linewidth}{0.5pt} \vspace{-4pt}] % Modified section format slightly
+\renewcommand\labelitemi{\raisebox{0.4ex}{\tiny$\bullet$}}
+\renewcommand{\labelitemii}{$\cdot$}
+\pagenumbering{gobble} % Removes page numbers
+
+% Header command
+\usepackage{calc} % Required for width calculation
+\newlength{\headerwidth} \setlength{\headerwidth}{\textwidth}
+\newcommand{\headerinfo}[3]{% \headerinfo{Name}{Contact Line 1}{Contact Line 2}
+    \begin{center} {\Huge \bfseries #1} \\ \vspace{2pt}
+        {#2} \\ \vspace{1pt} {#3}
+    \end{center} \vspace{0.05cm} \hrule \vspace{0.2cm} % Added horizontal rule
+}
+
+\begin{document}
+
+% Example Header Usage (Replace with actual info)
+\headerinfo{Firstname Lastname}
+           {\faMobile\enspace +1 (123) 456-7890 $|$ \faEnvelope\enspace \href{mailto:your.email@example.com}{your.email@example.com} $|$ \faMapMarker\enspace City, State}
+           {\faLinkedin\enspace \href{https://linkedin.com/in/yourprofile}{linkedin.com/in/yourprofile} $|$ \faGithub\enspace \href{https://github.com/yourprofile}{github.com/yourprofile} $|$ \faGlobe\enspace \href{https://example.com}{Portfolio/Website}}
+
+\section*{Scholastic Achievements} \vspace{-15pt} \vspace{1.5mm}
+\begin{itemize}[itemsep = -0.70 mm, leftmargin=*]
+    \item \noindent Pursuing a \textbf{Minor} in Industrial Design Center(IDC) \hfill {\ \small [Date]}
+    \item \noindent Ranked in the top \textbf{X \%} among \textbf{Y} candidates in Exam Name \hfill {\ \small [Date]}
+    % Add more achievement items
+\end{itemize} \vspace{-10pt}
+
+\section*{Professional Experience} \vspace{-15pt} \vspace{1.5mm}
+\textbf{\large{Job Title} | \normalfont{Company Name}} \hfill {\small City, State \quad [Start Date] - [End Date]} \\[-0.05cm]
+\emph{Optional: Short description or key achievement} \\[-0.6cm]
+\begin{itemize}[itemsep = -0.75 mm]
+    \item \noindent Responsibility or achievement using action verbs. Quantify results where possible.
+    \item \noindent Another responsibility or achievement.
+\end{itemize}
+% Repeat block for other experiences
+\vspace{-15pt}
+
+\section*{Positions of Responsibility} \vspace{-15pt} \vspace{1.5mm}
+\textbf{\large{Role/Title}} \hfill {\small Organization \quad [Start Date] - [End Date]} \\[-0.05cm]
+\emph{Optional: Context or selection criteria} \\[-0.6cm]
+\begin{itemize}[itemsep = -0.75 mm]
+    \item \noindent Key responsibility or accomplishment.
+    \item \noindent Another key responsibility.
+\end{itemize}
+% Repeat block for other PoRs
+\vspace{-15pt}
+
+\section*{Technical Skills} \vspace{-15pt} \vspace{1.5mm}
+\begin{itemize}[itemsep = -0.70 mm, leftmargin=*]
+    \item \noindent \textbf{Programming/Languages:} Skill 1, Skill 2, Skill 3
+    \item \noindent \textbf{Software/Tools:} Tool 1, Tool 2, Tool 3
+    \item \noindent \textbf{Design/Other:} Skill A, Skill B
+\end{itemize} \vspace{-10pt}
+
+\section*{Projects Undertaken} \vspace{-15pt} \vspace{1.5mm}
+\textbf{\large{Project Name}} \hfill {\small [Date]} \\[-0.05cm]
+\emph{Optional: Guide/Context (e.g., Course Project, Personal Project)} \hfill {\small \emph{}} \\[-0.6cm]
+\begin{itemize}[itemsep = -0.75 mm]
+    \item \noindent Description of the project and your contributions. Include technologies used if applicable. \href{[link-if-any]}{\color{blue}\faGithub} % Link example
+    \item \noindent Key features or outcomes.
+\end{itemize}
+% Repeat block for other projects
+\vspace{-15pt}
+
+\section*{Key Courses Undertaken} \vspace{-15pt} \vspace{1.5mm}
+\textbf{Relevant Area 1:} Course A, Course B, Course C \\[-0.4cm] % Adjust spacing
+\textbf{Relevant Area 2:} Course D, Course E \\[-0.4cm]
+\textbf{Miscellaneous:} Course X, Course Y \vspace{-5pt}
+
+\vspace{-10pt}
+\section*{Extra Curricular Skills \& Achievements} \vspace{-15pt} \vspace{1.5mm}
+\begin{itemize}[itemsep = -0.75 mm, leftmargin=*]
+    \item \noindent Activity, Role, or Achievement. Quantify impact or scale if possible (e.g., led team of 5, event footfall 1000+).
+    \item \noindent Another activity or skill (e.g., Completed Workshop Name).
+\end{itemize}
+
+\end{document}
+"""
+
+off_campus_latex = r"""\documentclass[a4paper,11pt]{article}
+# Uses standard article class
+\usepackage{latexsym} \usepackage{xcolor} \usepackage{float} \usepackage{ragged2e} \usepackage[empty]{fullpage} \usepackage{wrapfig} \usepackage{lipsum} \usepackage{tabularx} \usepackage{titlesec} \usepackage{geometry} \usepackage{marvosym} \usepackage{verbatim} \usepackage{enumitem} \usepackage[hidelinks]{hyperref} \usepackage{fancyhdr} \usepackage{multicol} \usepackage{graphicx} \usepackage{cfr-lm} \usepackage[T1]{fontenc} \usepackage{fontawesome5} % Changed to fontawesome5
+\usepackage[most]{tcolorbox}
+
+% Set the margins
+\geometry{left=0.85cm, top=0.8cm, right=0.85cm, bottom=0.2cm}
+
+% Sections formatting
+\titleformat{\section}{ \vspace{-4pt}\scshape\raggedright\large }{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+% Custom commands
+\newcommand{\resumePOR}[3]{ \vspace{0.5mm}\item[] \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r} \hspace{-3mm}{#1}:\hspace{1mm} & \hspace*{0pt}\hfill{\footnotesize{ #3}} \vspace{-0.5mm}\\ \hspace{-2.9mm}#2 \end{tabular*} \vspace{0mm} }
+\newcommand{\resumeExp}[4]{ \vspace{0mm}\item[] \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r} \hspace{-4.4mm} \small\textbf{#1} & {\footnotesize{#3}}\vspace{-1.2mm}\\ \hspace{-4.3mm} \footnotesize{\text{#2}} & \footnotesize{#4} \end{tabular*} \vspace{-6.1mm} }
+\newcommand{\resumeProject}[4]{ \vspace{0mm}\item[] \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r} \hspace{-4.4mm} \small\textbf{#1} & {\footnotesize{#3}}\vspace{-1mm}\\ \hspace{-4.3mm} \footnotesize{\text{#2}} & \footnotesize{#4} \end{tabular*} \vspace{-6.5mm} }
+\newcommand{\resumeEdu}[4]{ \vspace{0mm}\item[] \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r} \hspace{-4.3mm} \small\textbf{#1} & \footnotesize{#3}\vspace{-1mm} \\ \hspace{-4.3mm} \footnotesize{#2} & \footnotesize{#4} \end{tabular*} \vspace{-3.2mm} }
+\newcommand{\resumeAchieve}[3] { \hspace{-3.1mm}\textbf{ #1} & {#2} & \hspace{3mm}\footnotesize{#3} \vspace{0mm}\\ }
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm,itemsep=-2.5mm]}
+\newcommand{\resumeItemListStart}{\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-1.5mm}}
+\renewcommand{\arraystretch}{1}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}% \newcolumntype{R}{>{\raggedleft\arraybackslash}X}% \newcolumntype{C}{>{\centering\arraybackslash}X}%
+
+\begin{document}
+\fontfamily{cmr}\selectfont % Uses Computer Modern Roman font
+
+%----------HEADING-----------------
+% Define header info here before using it
+\newcommand{\name}{Student's Name} % Your Name
+\newcommand{\phone}{xxxxxxxxxx} % Your Phone Number
+\newcommand{\emaila}{xxxxxxxxxxxxxx@gmail.com} %Email 1
+\newcommand{\github}{xxxxxxxxxx} %Github username
+\newcommand{\linkedin}{xxxxxxxxx} %linkedin username
+
+\begin{center} \LARGE{\textbf{\name}} \end{center} \vspace{-6.5mm}
+\begin{center} \small{\href{https://github.com/\github}{\faGithub\hspace{0.2mm} github.com/\github} | \href{https://www.linkedin.com/in/\linkedin/}{\faLinkedin\hspace{0.2mm} linkedin.com/in/\linkedin} | \href{mailto:\emaila}{\faEnvelope\hspace{0.2mm} \emaila} | \faPhone\hspace{0.2mm} +91-\phone } \end{center} \vspace{-3mm}
+
+%-----------EDUCATION-----------------
+\vspace{-2.5mm} \section{Education}
+\resumeSubHeadingListStart \resumeEdu {Indian Institute of Technology Guwahati, India} {Bachelors of Technology in Computer Science and Engineering} {Jul 2018 - Jun 2022} {GPA: x.xx/10.0} \resumeSubHeadingListEnd \vspace{-3.5mm}
+
+%-----------EXPERIENCE-----------------
+\section{Experience}
+\resumeSubHeadingListStart
+\resumeExp {Company 1 - Team} {Title, Internship} {May 2022 - Aug 2022} {City, India}
+\resumeItemListStart \item[$\bullet$] Work done list 1. \item[$\bullet$] Work done list 2. \item[$\bullet$] Work done list 3. \resumeItemListEnd
+\resumeExp {Company 2 - Team} {Title, Internship} {May 2022 - Aug 2022} {City, India}
+\resumeItemListStart \item[$\bullet$] Work done list 1. \item[$\bullet$] Work done list 2. \item[$\bullet$] Work done list 3, \item[$\bullet$] Work done list 4. \resumeItemListEnd
+\resumeSubHeadingListEnd \vspace{-5.5mm}
+
+%-----------PROJECTS-----------------
+\section{Projects}
+\resumeSubHeadingListStart
+\resumeProject {Project 1} {Prof. XYZ,  IIT Guwahati} {Jul 2020 - Nov 2020} {\href{https://github.com/...}{\faGithub}}
+\resumeItemListStart \item[$\bullet$] Project Description 1 \item[$\bullet$] Project Description 2 \resumeItemListEnd
+\resumeProject {Project 2} {Coding Club, IIT Guwahati} {Apr 2020 - Jul 2020} {\href{https://github.com/...}{\faGithub}}
+\resumeItemListStart \item[$\bullet$] Project Description 1 \item[$\bullet$] Project Description 2 \resumeItemListEnd
+\resumeProject {Project 3} {Students' Web Committee, IIT Guwahati} {Jan 2020 - Apr 2020} {\href{https://github.com/...}{\faGithub}}
+\resumeItemListStart \item[$\bullet$] Project Description 1 \item[$\bullet$] Project Description 2 \resumeItemListEnd
+\resumeProject {Other Projects}{}{}{} \vspace{-3.5mm}
+\resumeItemListStart \item[$\bullet$] \textbf{Project 4 \href{https://github.com/...}{\footnotesize\faGithub}} : Project Description \item[$\bullet$] \textbf{Project 5 \href{https://github.com/...}{\footnotesize\faGithub}} : Project Description \resumeItemListEnd
+\resumeSubHeadingListEnd \vspace{-5.5mm}
+
+\section{Achievements} \vspace{0.2mm}
+\small{\begin{tabular*}{\textwidth}[t]{p{0.22\textwidth} p{0.68\textwidth}@{\extracolsep{\fill}}r}
+\resumeAchieve{Achievement 1}{Description}{Year}
+\resumeAchieve{Achievement 2}{Description}{Year}
+% Add more achievements
+\end{tabular*}} \vspace{-2.5mm}
+
+\section{Technical Skills} \vspace{0.2mm}
+\small{\begin{tabular*}{\textwidth}[t]{p{0.5\textwidth} p{0.5\textwidth}}
+\hspace{-3.1mm}{\textbf{ Programming languages:} C++, C, Python, C\#, Java} & {\textbf{Web Technologies:} HTML, CSS, Django, JavaScript} \\
+\hspace{-3.1mm}{\textbf{ ML/AI:} Pytorch, Numpy, Pandas, Matplotlib} & {\textbf{Miscellaneous:} MySQL, AWS, Git, Shell, Latex, Unity}
+\end{tabular*}} \vspace{-2.5mm}
+
+\section{Relevant Coursework} \vspace{0.2mm}
+\small{\begin{tabular*}{\textwidth}[t]{p{\textwidth}}
+\hspace{-3.1mm}\textbf{ Computer Science: }{Deep Learning, Data Structures and Algorithms, Databases, Operating Systems, Computer Networks}\\
+\hspace{-3.1mm}\textbf{ Mathematics: }{Optimization, Discrete Maths, Probability and Random Processes, Number Theory, Linear Algebra}
+\end{tabular*}} \vspace{-2.5mm}
+
+\section{Positions of Responsibility} \vspace{-0.4mm}
+\resumeSubHeadingListStart
+\resumePOR{\textbf{Title, Organization 1}} {Work done}{\raisebox{0.75pt}{Year Start - Year End}} \vspace{0.5mm}
+\resumePOR{\textbf{Title, Organization 2}} {Work done} {\raisebox{0.75pt}{Year Start - Year End}} \vspace{-1mm}
+\resumeSubHeadingListEnd
+\hspace*{-2mm}\rule{1.030\textwidth}{0.1mm} \vspace{-2mm} % Adjusted final rule spacing
+\end{document}
