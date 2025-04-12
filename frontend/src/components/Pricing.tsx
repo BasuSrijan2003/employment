@@ -12,9 +12,15 @@ import {
   Check,
   AlertCircle,
   CreditCard,
-  // Paypal,
   Landmark,
   BadgeCheck,
+  Smartphone,
+  Globe,
+  Wallet,
+  ChevronDown,
+  ArrowRight,
+  Shield,
+  Lock,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -24,6 +30,8 @@ const Pricing = () => {
   );
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>("card");
+  const [paymentCategory, setPaymentCategory] = useState<string>("cards");
+  const [showPaymentDetails, setShowPaymentDetails] = useState(false);
 
   const plans = [
     {
@@ -89,8 +97,57 @@ const Pricing = () => {
     },
   ];
 
+  const paymentMethods = {
+    cards: [
+      { id: "visa", name: "Visa", logo: "💳" },
+      { id: "mastercard", name: "Mastercard", logo: "💳" },
+      { id: "rupay", name: "RuPay", logo: "💳" },
+      { id: "amex", name: "American Express", logo: "💳" },
+    ],
+    upi: [
+      { id: "googlepay", name: "Google Pay", logo: "📱" },
+      { id: "phonepe", name: "PhonePe", logo: "📱" },
+      { id: "paytm", name: "Paytm UPI", logo: "📱" },
+      { id: "bhim", name: "BHIM UPI", logo: "📱" },
+    ],
+    netbanking: [
+      { id: "sbi", name: "State Bank of India", logo: "🏦" },
+      { id: "hdfc", name: "HDFC Bank", logo: "🏦" },
+      { id: "icici", name: "ICICI Bank", logo: "🏦" },
+      { id: "axis", name: "Axis Bank", logo: "🏦" },
+      { id: "other_banks", name: "Other Banks", logo: "🏦" },
+    ],
+    wallets: [
+      { id: "paytm_wallet", name: "Paytm Wallet", logo: "👛" },
+      { id: "amazon_pay", name: "Amazon Pay", logo: "👛" },
+      { id: "mobikwik", name: "MobiKwik", logo: "👛" },
+    ],
+  };
+
   const handleSelectPlan = (planId: string) => {
-    setSelectedPlan(planId);
+    if (selectedPlan === planId) {
+      setSelectedPlan(null);
+      setShowPaymentDetails(false);
+    } else {
+      setSelectedPlan(planId);
+      setShowPaymentDetails(false);
+    }
+  };
+
+  const handlePaymentCategoryChange = (category: string) => {
+    setPaymentCategory(category);
+    setPaymentMethod(
+      paymentMethods[category as keyof typeof paymentMethods][0].id
+    );
+  };
+
+  const handlePaymentMethodSelect = (methodId: string) => {
+    setPaymentMethod(methodId);
+    setShowPaymentDetails(true);
+  };
+
+  const getSelectedPlanDetails = () => {
+    return plans.find((plan) => plan.id === selectedPlan);
   };
 
   return (
@@ -226,89 +283,233 @@ const Pricing = () => {
 
                 {/* Only show payment options for paid plans */}
                 {plan.id !== "free" && selectedPlan === plan.id && (
-                  <div className="mt-4 w-full bg-white/10 p-4 rounded-lg backdrop-blur-sm">
-                    <h4 className="text-sm font-medium text-white mb-3">
-                      Payment Method
+                  <div className="mt-4 w-full bg-white/10 p-4 rounded-lg backdrop-blur-sm border border-white/20 transition-all duration-300">
+                    <h4 className="text-sm font-medium text-white mb-3 flex items-center">
+                      <Lock className="w-4 h-4 mr-2" />
+                      Secure Payment
                     </h4>
-                    <div className="grid grid-cols-3 gap-2 mb-4">
-                      <button
-                        className={`flex flex-col items-center justify-center p-3 rounded-lg ${
-                          paymentMethod === "card"
-                            ? "bg-blue-600"
-                            : "bg-white/10"
-                        }`}
-                        onClick={() => setPaymentMethod("card")}
-                      >
-                        <CreditCard
-                          className={`w-5 h-5 ${
-                            paymentMethod === "card"
-                              ? "text-white"
-                              : "text-blue-100"
-                          }`}
-                        />
-                        <span
-                          className={`text-xs mt-1 ${
-                            paymentMethod === "card"
-                              ? "text-white"
-                              : "text-blue-100"
-                          }`}
+
+                    {/* Payment category selection */}
+                    <Tabs
+                      defaultValue="cards"
+                      value={paymentCategory}
+                      onValueChange={handlePaymentCategoryChange}
+                      className="w-full mb-4"
+                    >
+                      <TabsList className="grid grid-cols-4 mb-4 bg-black/30">
+                        <TabsTrigger
+                          value="cards"
+                          className="flex items-center"
                         >
-                          Card
-                        </span>
-                      </button>
-                      <button
-                        className={`flex flex-col items-center justify-center p-3 rounded-lg ${
-                          paymentMethod === "paypal"
-                            ? "bg-blue-600"
-                            : "bg-white/10"
-                        }`}
-                        onClick={() => setPaymentMethod("paypal")}
-                      >
-                        {/* <Paypal
-                          className={`w-5 h-5 ${
-                            paymentMethod === "paypal"
-                              ? "text-white"
-                              : "text-blue-100"
-                          }`}
-                        /> */}
-                        <span
-                          className={`text-xs mt-1 ${
-                            paymentMethod === "paypal"
-                              ? "text-white"
-                              : "text-blue-100"
-                          }`}
+                          <CreditCard className="w-4 h-4 mr-2" />
+                          <span className="hidden sm:inline">Cards</span>
+                        </TabsTrigger>
+                        <TabsTrigger value="upi" className="flex items-center">
+                          <Smartphone className="w-4 h-4 mr-2" />
+                          <span className="hidden sm:inline">UPI</span>
+                        </TabsTrigger>
+                        <TabsTrigger
+                          value="netbanking"
+                          className="flex items-center"
                         >
-                          PayPal
-                        </span>
-                      </button>
-                      <button
-                        className={`flex flex-col items-center justify-center p-3 rounded-lg ${
-                          paymentMethod === "bank"
-                            ? "bg-blue-600"
-                            : "bg-white/10"
-                        }`}
-                        onClick={() => setPaymentMethod("bank")}
-                      >
-                        <Landmark
-                          className={`w-5 h-5 ${
-                            paymentMethod === "bank"
-                              ? "text-white"
-                              : "text-blue-100"
-                          }`}
-                        />
-                        <span
-                          className={`text-xs mt-1 ${
-                            paymentMethod === "bank"
-                              ? "text-white"
-                              : "text-blue-100"
-                          }`}
+                          <Landmark className="w-4 h-4 mr-2" />
+                          <span className="hidden sm:inline">NetBanking</span>
+                        </TabsTrigger>
+                        <TabsTrigger
+                          value="wallets"
+                          className="flex items-center"
                         >
-                          Bank
+                          <Wallet className="w-4 h-4 mr-2" />
+                          <span className="hidden sm:inline">Wallets</span>
+                        </TabsTrigger>
+                      </TabsList>
+
+                      {Object.entries(paymentMethods).map(
+                        ([category, methods]) => (
+                          <TabsContent
+                            key={category}
+                            value={category}
+                            className="mt-0"
+                          >
+                            <div className="grid grid-cols-2 gap-2 mb-4">
+                              {methods.map((method) => (
+                                <button
+                                  key={method.id}
+                                  className={`flex items-center justify-start p-3 rounded-lg text-left ${
+                                    paymentMethod === method.id
+                                      ? "bg-blue-600"
+                                      : "bg-white/10 hover:bg-white/20"
+                                  }`}
+                                  onClick={() =>
+                                    handlePaymentMethodSelect(method.id)
+                                  }
+                                >
+                                  <span className="text-lg mr-2">
+                                    {method.logo}
+                                  </span>
+                                  <span
+                                    className={`text-sm ${
+                                      paymentMethod === method.id
+                                        ? "text-white"
+                                        : "text-blue-100"
+                                    }`}
+                                  >
+                                    {method.name}
+                                  </span>
+                                </button>
+                              ))}
+                            </div>
+                          </TabsContent>
+                        )
+                      )}
+                    </Tabs>
+
+                    {/* Payment details */}
+                    {showPaymentDetails && (
+                      <div className="bg-black/20 p-4 rounded-lg mb-4 border border-white/10">
+                        {paymentCategory === "cards" && (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="text-xs text-blue-200 block mb-1">
+                                Card Number
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="1234 5678 9012 3456"
+                                className="w-full bg-black/30 border border-white/20 rounded-md p-2 text-white placeholder:text-white/50 text-sm"
+                              />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                              <div>
+                                <label className="text-xs text-blue-200 block mb-1">
+                                  Expiry Date
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="MM/YY"
+                                  className="w-full bg-black/30 border border-white/20 rounded-md p-2 text-white placeholder:text-white/50 text-sm"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-blue-200 block mb-1">
+                                  CVV
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="123"
+                                  className="w-full bg-black/30 border border-white/20 rounded-md p-2 text-white placeholder:text-white/50 text-sm"
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label className="text-xs text-blue-200 block mb-1">
+                                Name on Card
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="John Doe"
+                                className="w-full bg-black/30 border border-white/20 rounded-md p-2 text-white placeholder:text-white/50 text-sm"
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {paymentCategory === "upi" && (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="text-xs text-blue-200 block mb-1">
+                                UPI ID
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="yourname@upi"
+                                className="w-full bg-black/30 border border-white/20 rounded-md p-2 text-white placeholder:text-white/50 text-sm"
+                              />
+                            </div>
+                            <div className="text-center">
+                              <p className="text-xs text-blue-200">
+                                Or scan QR code with your UPI app
+                              </p>
+                              <div className="bg-white mx-auto my-2 w-24 h-24 rounded-md flex items-center justify-center">
+                                <span className="text-black text-xs">
+                                  QR Placeholder
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {paymentCategory === "netbanking" && (
+                          <div className="text-center py-2">
+                            <p className="text-xs text-blue-200 mb-2">
+                              You will be redirected to your bank's secure
+                              payment page
+                            </p>
+                            <img
+                              src="/api/placeholder/200/60"
+                              alt="Bank secure gateway"
+                              className="mx-auto rounded"
+                            />
+                          </div>
+                        )}
+
+                        {paymentCategory === "wallets" && (
+                          <div className="text-center py-2">
+                            <p className="text-xs text-blue-200 mb-2">
+                              You'll be redirected to complete the payment
+                            </p>
+                            <img
+                              src="/api/placeholder/150/60"
+                              alt="Wallet provider"
+                              className="mx-auto rounded"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Order summary */}
+                    <div className="bg-black/30 p-3 rounded-lg mb-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-blue-200">Plan</span>
+                        <span className="text-sm text-white font-medium">
+                          {getSelectedPlanDetails()?.name} ({billingCycle})
                         </span>
-                      </button>
+                      </div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-blue-200">Price</span>
+                        <span className="text-sm text-white font-medium">
+                          {getSelectedPlanDetails()?.price}
+                        </span>
+                      </div>
+                      <div className="border-t border-white/10 my-2"></div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-blue-200">
+                          Total (inc. GST)
+                        </span>
+                        <span className="text-sm text-white font-bold">
+                          {getSelectedPlanDetails()?.price}
+                        </span>
+                      </div>
                     </div>
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
-                      Proceed to Payment
+
+                    {/* Security badges */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center text-xs text-blue-200">
+                        <Shield className="w-3 h-3 mr-1" />
+                        <span>256-bit SSL Secure</span>
+                      </div>
+                      <div className="flex gap-1">
+                        <div className="bg-white/90 h-4 w-8 rounded"></div>
+                        <div className="bg-white/90 h-4 w-8 rounded"></div>
+                        <div className="bg-white/90 h-4 w-8 rounded"></div>
+                      </div>
+                    </div>
+
+                    {/* Payment button */}
+                    <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 flex items-center justify-center">
+                      <span>Pay {getSelectedPlanDetails()?.price}</span>
+                      <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
                 )}
