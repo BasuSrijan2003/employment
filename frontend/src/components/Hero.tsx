@@ -1,15 +1,150 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle, ExternalLink } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle,
+  ExternalLink,
+  Sparkles,
+  Brain,
+  Target,
+  Cpu,
+  Network,
+  Code,
+  LineChart,
+  Zap,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const Hero = () => {
   const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isTyping, setIsTyping] = useState(true);
+  const [typedText, setTypedText] = useState("");
+  const fullText = "Supercharge Your Career with AI-Powered Resume Crafting";
+  const typingSpeed = 75; // milliseconds per character
+  const canvasRef = useRef(null);
 
+  // Neural network animation
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const nodes = [];
+    const connections = [];
+    const numNodes = 50;
+
+    // Create nodes
+    for (let i = 0; i < numNodes; i++) {
+      nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 1,
+        vx: Math.random() * 0.5 - 0.25,
+        vy: Math.random() * 0.5 - 0.25,
+      });
+    }
+
+    // Create connections
+    for (let i = 0; i < numNodes; i++) {
+      for (let j = i + 1; j < numNodes; j++) {
+        if (Math.random() > 0.98) {
+          connections.push({
+            from: i,
+            to: j,
+          });
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update and draw connections
+      ctx.strokeStyle = "rgba(245, 230, 18, 0.15)";
+      ctx.lineWidth = 0.6;
+      connections.forEach((connection) => {
+        const fromNode = nodes[connection.from];
+        const toNode = nodes[connection.to];
+
+        const dx = mousePosition.x * canvas.width - fromNode.x;
+        const dy = mousePosition.y * canvas.height - fromNode.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        ctx.beginPath();
+        ctx.moveTo(fromNode.x, fromNode.y);
+        ctx.lineTo(toNode.x, toNode.y);
+        ctx.stroke();
+
+        // Draw data packet traveling along line
+        if (Math.random() > 0.995) {
+          const packetPosition = Math.random();
+          const packetX = fromNode.x + (toNode.x - fromNode.x) * packetPosition;
+          const packetY = fromNode.y + (toNode.y - fromNode.y) * packetPosition;
+
+          ctx.fillStyle = "rgba(0, 235, 255, 0.8)";
+          ctx.beginPath();
+          ctx.arc(packetX, packetY, 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+
+      // Update and draw nodes
+      nodes.forEach((node) => {
+        // Move nodes
+        node.x += node.vx;
+        node.y += node.vy;
+
+        // Bounce off edges
+        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+
+        // Draw node
+        const mouseDx = mousePosition.x * canvas.width - node.x;
+        const mouseDy = mousePosition.y * canvas.height - node.y;
+        const mouseDistance = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
+
+        // Glow based on mouse proximity
+        const glow = mouseDistance < 200 ? (1 - mouseDistance / 200) * 0.8 : 0;
+
+        ctx.fillStyle = `rgba(64, 149, 255, ${0.2 + glow})`;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Add glow effect
+        if (glow > 0) {
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = "rgba(0, 235, 255, 0.5)";
+          ctx.fillStyle = "rgba(0, 235, 255, 0.8)";
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.radius * (1 + glow), 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [mousePosition]);
+
+  // Mouse position tracking
+  useEffect(() => {
+    const handleMouseMove = (e) => {
       setMousePosition({
         x: e.clientX / window.innerWidth,
         y: e.clientY / window.innerHeight,
@@ -19,6 +154,21 @@ const Hero = () => {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  // Typing effect
+  useEffect(() => {
+    if (!isTyping) return;
+
+    if (typedText.length < fullText.length) {
+      const timeout = setTimeout(() => {
+        setTypedText(fullText.slice(0, typedText.length + 1));
+      }, typingSpeed);
+
+      return () => clearTimeout(timeout);
+    } else {
+      setIsTyping(false);
+    }
+  }, [typedText, isTyping, fullText]);
 
   const handleCreateResume = () => {
     document
@@ -32,441 +182,381 @@ const Hero = () => {
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Modern grid lines for background
-  const gridLines = Array.from({ length: 10 });
-
   return (
-    <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-      {/* Modern dark background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 z-0"></div>
+    <div className="relative w-full overflow-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-blue-950 min-h-screen">
+      {/* Neural network background */}
+      <canvas
+        ref={canvasRef}
+        className="absolute top-0 left-0 w-full h-full z-0"
+      />
 
-      {/* Modern grid lines animation */}
-      <div className="absolute inset-0 z-0 opacity-20">
-        {/* Horizontal lines */}
-        {gridLines.map((_, i) => (
-          <motion.div
-            key={`h-line-${i}`}
-            className="absolute h-px w-full bg-blue-400"
-            style={{ top: `${(i + 1) * 10}%` }}
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{
-              scaleX: 1,
-              opacity: [0, 0.5, 0],
-              x: [(i % 2 === 0 ? -20 : 20) * mousePosition.x, 0],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatType: "reverse",
-              delay: i * 0.2,
-            }}
-          />
-        ))}
+      {/* Glowing gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-radial from-transparent to-gray-950 opacity-60 z-10"></div>
 
-        {/* Vertical lines */}
-        {gridLines.map((_, i) => (
-          <motion.div
-            key={`v-line-${i}`}
-            className="absolute w-px h-full bg-indigo-400"
-            style={{ left: `${(i + 1) * 10}%` }}
-            initial={{ scaleY: 0, opacity: 0 }}
-            animate={{
-              scaleY: 1,
-              opacity: [0, 0.5, 0],
-              y: [(i % 2 === 0 ? -20 : 20) * mousePosition.y, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              repeatType: "reverse",
-              delay: i * 0.3,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Modern floating geometric shapes */}
+      {/* Animated grid */}
       <div className="absolute inset-0 z-0">
-        {/* Circle */}
-        <motion.div
-          className="absolute w-96 h-96 rounded-full border-4 border-blue-500/30 top-0 right-0"
-          animate={{
-            x: [50, -50],
-            y: [-50, 50],
-            rotate: [0, 180],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-        />
-
-        {/* Square */}
-        <motion.div
-          className="absolute w-64 h-64 border-4 border-indigo-500/30 bottom-20 left-20"
-          animate={{
-            x: [-30, 30],
-            y: [30, -30],
-            rotate: [0, 90],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            repeatType: "reverse",
-            delay: 2,
-          }}
-        />
-
-        {/* Triangle */}
-        <svg
-          className="absolute bottom-40 right-40 z-0"
-          width="200"
-          height="200"
-          viewBox="0 0 100 100"
-        >
-          <motion.path
-            d="M50 15 L15 85 L85 85 Z"
-            fill="none"
-            stroke="rgba(139, 92, 246, 0.3)"
-            strokeWidth="2"
-            animate={{
-              rotate: [0, 180, 0],
-              scale: [1, 1.2, 1],
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            style={{ transformOrigin: "center" }}
-          />
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="grid"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                stroke="rgba(64, 149, 255, 0.1)"
+                strokeWidth="0.5"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
       </div>
 
-      {/* Modern glow effects */}
-      <motion.div
-        className="absolute top-1/4 right-1/3 w-80 h-80 rounded-full bg-blue-600/10 blur-3xl z-0"
-        animate={{
-          scale: [1, 1.5, 1],
-          opacity: [0.3, 0.7, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          repeatType: "mirror",
-        }}
-        style={{
-          filter: "blur(60px)",
-        }}
-      />
-
-      <motion.div
-        className="absolute bottom-1/4 left-1/3 w-96 h-96 rounded-full bg-indigo-600/10 blur-3xl z-0"
-        animate={{
-          scale: [1, 1.5, 1],
-          opacity: [0.3, 0.7, 0.3],
-        }}
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          repeatType: "mirror",
-          delay: 2,
-        }}
-        style={{
-          filter: "blur(70px)",
-        }}
-      />
-
-      {/* Digital particle wave effect */}
-      <div className="absolute inset-x-0 bottom-0 h-40 z-0">
-        {Array.from({ length: 20 }).map((_, index) => (
-          <motion.div
-            key={`particle-${index}`}
-            className="absolute w-2 h-2 rounded-full bg-blue-400"
-            style={{
-              left: `${index * 5}%`,
-              bottom: "0",
-            }}
-            animate={{
-              y: [-40, -60 - Math.random() * 100, -40],
-              opacity: [0, 0.8, 0],
-            }}
-            transition={{
-              duration: 2 + Math.random() * 3,
-              repeat: Infinity,
-              delay: index * 0.1,
-            }}
-          />
-        ))}
+      {/* Binary code background */}
+      <div className="absolute inset-0 z-0 opacity-10">
+        <div className="h-full overflow-hidden">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div
+              key={`binary-${i}`}
+              className="text-blue-400 opacity-20 whitespace-nowrap animate-marquee font-mono text-xs"
+              style={{
+                animationDuration: `${20 + i * 5}s`,
+                animationDelay: `${i * 0.5}s`,
+              }}
+            >
+              {Array.from({ length: 100 })
+                .map((_, j) => (Math.random() > 0.5 ? "1" : "0"))
+                .join(" ")}
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="container relative z-10 px-4 mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center lg:text-left"
-          >
-            {/* Fixed text reveal animation with improved font rendering */}
-            <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
-              <motion.div
-                initial={{ y: 100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="overflow-hidden"
+      {/* Main content */}
+      <div className="relative z-20 container mx-auto px-4 pt-24 pb-16">
+        <div className="flex flex-col lg:flex-row items-center gap-12">
+          {/* Left column - Hero text */}
+          <div className="w-full lg:w-1/2">
+            {/* AI Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-4 py-1 inline-flex items-center space-x-2 mb-6"
+            >
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+              </span>
+              <span className="text-blue-300 font-medium text-sm">
+                Powered by Advanced AI
+              </span>
+            </motion.div>
+
+            {/* Main heading with typing effect */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-6"
+            >
+              {typedText}
+              <span
+                className={`inline-block w-1.5 h-8 ml-1 bg-blue-500 ${
+                  isTyping ? "animate-blink" : ""
+                }`}
+              ></span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="text-gray-300 text-lg md:text-xl mb-8 max-w-xl"
+            >
+              Our intelligent algorithms analyze millions of successful resumes
+              to craft perfectly optimized documents that bypass ATS systems and
+              impress recruiters.
+            </motion.p>
+
+            {/* Features list */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
+              className="space-y-3 mb-8"
+            >
+              <div className="flex items-start space-x-3">
+                <Sparkles className="h-6 w-6 text-blue-400 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-medium text-white">
+                    Smart Content Generation
+                  </h3>
+                  <p className="text-gray-400">
+                    AI analyzes your experience and suggests optimal phrasing
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Target className="h-6 w-6 text-blue-400 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-medium text-white">
+                    ATS-Optimized Templates
+                  </h3>
+                  <p className="text-gray-400">
+                    Engineered to pass Applicant Tracking Systems
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Brain className="h-6 w-6 text-blue-400 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-medium text-white">
+                    Personalized Recommendations
+                  </h3>
+                  <p className="text-gray-400">
+                    Get tailored advice to strengthen your application
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.8 }}
+              className="flex flex-wrap gap-4"
+            >
+              <Button
+                onClick={handleCreateResume}
+                className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-8 py-6 rounded-lg text-lg font-medium transition-all duration-300 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 flex items-center gap-2 group"
               >
-                <span className="inline-block">Land Your Dream Job with</span>
-              </motion.div>
-              <div>
-                <motion.span
-                  initial={{ y: 100 }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                  className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-500 inline-block mt-2"
-                  style={{
-                    backgroundSize: "200% 100%",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
+                <span>Create Resume Now</span>
+                <Zap className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+              <Button
+                onClick={handleViewTemplates}
+                variant="outline"
+                className="bg-transparent border border-blue-500/30 text-white px-8 py-6 rounded-lg text-lg font-medium hover:bg-blue-500/10 transition-all duration-300 flex items-center gap-2"
+              >
+                <span>View Templates</span>
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            </motion.div>
+
+            {/* Trust badges */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.2 }}
+              className="mt-12 pt-6 border-t border-gray-800"
+            >
+              <p className="text-gray-400 text-sm mb-3">
+                Trusted by professionals from:
+              </p>
+              <div className="flex flex-wrap items-center gap-6">
+                {["IIT", "IIM", "Harvard", "MIT", "Stanford"].map(
+                  (name, index) => (
+                    <div key={name} className="text-gray-500 font-medium">
+                      {name}
+                    </div>
+                  )
+                )}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right column - Interactive AI Interface */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="w-full lg:w-1/2"
+          >
+            <div className="relative bg-gray-900/70 backdrop-blur-md border border-gray-800 rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/10">
+              {/* AI Interface Header */}
+              <div className="bg-gradient-to-r from-gray-900 to-gray-800 border-b border-gray-800 p-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
+                    <Brain className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-medium">
+                      ResumeAI Assistant
+                    </h3>
+                    <div className="flex items-center text-xs text-green-400">
+                      <span className="relative flex h-2 w-2 mr-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                      </span>
+                      Online now
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button className="text-gray-400 hover:text-white">
+                    <Cpu className="w-5 h-5" />
+                  </button>
+                  <button className="text-gray-400 hover:text-white">
+                    <LineChart className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* AI Chat Interface */}
+              <div className="p-4 h-[400px] overflow-y-auto flex flex-col gap-4">
+                {/* User message */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1 }}
+                  className="flex justify-end"
                 >
-                  IIT-IIM Formatted Resumes
-                </motion.span>
+                  <div className="bg-blue-600/20 border border-blue-600/30 rounded-lg rounded-tr-none p-3 max-w-[80%]">
+                    <p className="text-white">
+                      I need help creating a resume for a software engineering
+                      position.
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* AI response */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.5 }}
+                  className="flex"
+                >
+                  <div className="bg-gray-800/80 border border-gray-700 rounded-lg rounded-tl-none p-3 max-w-[80%]">
+                    <p className="text-white">
+                      I'll help you create a standout resume! Let's start by
+                      analyzing your skills and experience to highlight your
+                      strengths.
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* AI thinking animation */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 2 }}
+                  className="flex"
+                >
+                  <div className="bg-gray-800/80 border border-gray-700 rounded-lg rounded-tl-none p-4 max-w-[80%]">
+                    <div className="flex gap-1 mb-2">
+                      <span
+                        className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"
+                        style={{ animationDelay: "0ms" }}
+                      ></span>
+                      <span
+                        className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"
+                        style={{ animationDelay: "200ms" }}
+                      ></span>
+                      <span
+                        className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"
+                        style={{ animationDelay: "400ms" }}
+                      ></span>
+                    </div>
+                    <p className="text-white">
+                      Analyzing your profile and industry requirements...
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* AI recommendations */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 3 }}
+                  className="flex"
+                >
+                  <div className="bg-gray-800/80 border border-gray-700 rounded-lg rounded-tl-none p-4 max-w-[90%]">
+                    <p className="text-white mb-3">
+                      Based on your profile, I recommend focusing on these key
+                      areas:
+                    </p>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-white bg-blue-900/30 border border-blue-800/30 rounded-md px-3 py-2">
+                        <CheckCircle className="w-5 h-5 text-blue-400" />
+                        <span>
+                          Highlight your React & Node.js projects with specific
+                          metrics
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-white bg-blue-900/30 border border-blue-800/30 rounded-md px-3 py-2">
+                        <CheckCircle className="w-5 h-5 text-blue-400" />
+                        <span>
+                          Emphasize your experience with cloud platforms
+                          (AWS/GCP)
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-white bg-purple-900/30 border border-purple-800/30 rounded-md px-3 py-2">
+                        <Network className="w-5 h-5 text-purple-400" />
+                        <span>
+                          Add keywords: microservices, CI/CD pipelines, Docker
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* AI Input Field */}
+              <div className="p-4 border-t border-gray-800 bg-gray-900/70">
+                <div className="flex items-center gap-2 bg-gray-800 border border-gray-700 rounded-lg p-2">
+                  <input
+                    type="text"
+                    placeholder="Ask AI for specific resume advice..."
+                    className="flex-grow bg-transparent border-none outline-none text-white px-2"
+                  />
+                  <Button
+                    size="sm"
+                    className="bg-blue-600 hover:bg-blue-700 text-white rounded-md px-3 py-1"
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Futuristic glowing border effect */}
+              <div className="absolute inset-0 rounded-2xl pointer-events-none">
+                <div className="absolute -inset-1 rounded-2xl opacity-30 blur-xl bg-gradient-to-r from-blue-600 via-transparent to-purple-600"></div>
               </div>
             </div>
 
-            <motion.p
-              className="text-xl text-blue-100 mb-8 max-w-xl mx-auto lg:mx-0 font-normal antialiased"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.6 }}
-            >
-              Create professional resumes tailored specifically for IIT and IIM
-              standards. Stand out from the crowd and increase your chances of
-              getting noticed by top recruiters.
-            </motion.p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              {/* Primary CTA button with modern hover effect */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-              >
-                <Button
-                  className="relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-6 rounded-md text-lg font-medium shadow-lg group overflow-hidden"
-                  onClick={handleCreateResume}
-                >
-                  <span className="relative z-10 flex items-center">
-                    Create Your Resume
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-indigo-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                </Button>
-              </motion.div>
-
-              {/* Secondary CTA with modern design */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 1 }}
-              >
-                <Button
-                  className="relative bg-transparent text-white px-8 py-6 rounded-md text-lg font-medium group overflow-hidden"
-                  onClick={handleViewTemplates}
-                >
-                  <span className="relative z-10 flex items-center">
-                    <ExternalLink className="mr-2 h-5 w-5" />
-                    View Templates
-                  </span>
-                  <span className="absolute inset-0 border-2 border-blue-500/30 rounded-md"></span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-indigo-600/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                </Button>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:flex justify-center"
-          >
-            <div className="relative">
-              {/* Modern card design with 3D effect */}
-              <motion.div
-                className="w-[400px] h-[550px] bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-2xl"
-                style={{
-                  transformStyle: "preserve-3d",
-                  transform: `rotateY(-5deg) rotateX(5deg)`,
-                }}
-                animate={{
-                  rotateY: [-5, 0, -5],
-                  rotateX: [5, 0, 5],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                }}
-              >
-                <motion.div
-                  className="absolute inset-1 bg-white rounded-lg p-8"
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transform: "translateZ(10px)",
-                  }}
-                >
-                  <div className="h-6 w-20 bg-blue-500 rounded-md mb-4"></div>
-                  <div className="space-y-2">
-                    <div className="h-4 w-3/4 bg-gray-200 rounded"></div>
-                    <div className="h-4 w-1/2 bg-gray-200 rounded"></div>
-                  </div>
-                  <div className="mt-6 space-y-4">
-                    <div className="flex items-center">
-                      <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                        <CheckCircle className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div className="ml-3 space-y-1">
-                        <div className="h-3 w-40 bg-gray-200 rounded"></div>
-                        <div className="h-3 w-32 bg-gray-200 rounded"></div>
-                      </div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                        <CheckCircle className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div className="ml-3 space-y-1">
-                        <div className="h-3 w-36 bg-gray-200 rounded"></div>
-                        <div className="h-3 w-28 bg-gray-200 rounded"></div>
-                      </div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                        <CheckCircle className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div className="ml-3 space-y-1">
-                        <div className="h-3 w-44 bg-gray-200 rounded"></div>
-                        <div className="h-3 w-24 bg-gray-200 rounded"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Modern shine effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                    style={{ transform: "skewX(45deg)" }}
-                    animate={{ x: [-200, 600] }}
-                    transition={{
-                      duration: 2.5,
-                      repeat: Infinity,
-                      repeatDelay: 4,
-                    }}
-                  />
-                </motion.div>
-              </motion.div>
-
-              {/* Decorative dots */}
-              <div className="absolute right-0 top-0 translate-x-1/3 -translate-y-1/3">
-                <svg width="120" height="120" viewBox="0 0 100 100">
-                  <pattern
-                    id="pattern-circles"
-                    x="0"
-                    y="0"
-                    width="10"
-                    height="10"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <circle cx="2" cy="2" r="1" fill="#60A5FA" />
-                  </pattern>
-                  <motion.rect
-                    width="100%"
-                    height="100%"
-                    fill="url(#pattern-circles)"
-                    animate={{ rotate: [0, 360] }}
-                    transition={{
-                      duration: 100,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  />
-                </svg>
+            {/* AI Processing indicators */}
+            <div className="mt-4 flex justify-between items-center px-4">
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <Code className="w-4 h-4" />
+                <span>LLM Model: GPT-4 Turbo</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <Cpu className="w-4 h-4" />
+                <span>Processing: ATS Compatibility</span>
               </div>
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          className="mt-16 text-center"
-        >
-          <p className="text-blue-100 mb-4 font-medium tracking-wide antialiased">
-            Trusted by 10,000+ students and professionals from top institutions
-          </p>
-          <div className="flex flex-wrap justify-center gap-8">
-            {/* Modern animated logos */}
-            {Array.from({ length: 5 }).map((_, index) => (
-              <motion.div
-                key={`logo-${index}`}
-                className="h-8 w-20 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-md border border-blue-500/20"
-                whileHover={{
-                  scale: 1.1,
-                  borderColor: "rgba(59, 130, 246, 0.5)",
-                }}
-                animate={{
-                  y: [0, -5, 0],
-                  opacity: [0.7, 1, 0.7],
-                }}
-                transition={{
-                  duration: 3,
-                  delay: index * 0.2,
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                }}
-              />
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Modern scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <svg width="30" height="50" viewBox="0 0 30 50">
-            <motion.rect
-              x="10"
-              y="5"
-              width="10"
-              height="20"
-              rx="5"
-              stroke="rgba(96, 165, 250, 0.5)"
-              strokeWidth="2"
-              fill="none"
-            />
-            <motion.circle
-              cx="15"
-              cy="15"
-              r="3"
-              fill="#60A5FA"
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-          </svg>
-        </motion.div>
       </div>
-    </section>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 5, delay: 5 }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20"
+      >
+        <p className="text-gray-400 text-sm mb-2">Scroll to explore</p>
+        <div className="w-7 h-10 border-2 border-purple-500 rounded-full p-1">
+          <div className="w-1.5 h-2 bg-green-500 rounded-full animate-bounce mx-auto"></div>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 

@@ -1,0 +1,121 @@
+// JobSearchAI.module.scss
+
+// Particle container
+.particleContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  // Particles
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(1px);
+  }
+  
+  // Connection lines
+  .connection {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.05), rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.05));
+    transform-origin: center left;
+  }
+  
+  // Floating animation
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+    }
+    25% {
+      transform: translateY(-30px) translateX(15px);
+    }
+    50% {
+      transform: translateY(-15px) translateX(-15px);
+    }
+    75% {
+      transform: translateY(15px) translateX(10px);
+    }
+  }
+  
+  // Pulsing animation
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  // Glowing orb
+  .glowingOrb {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.1) 50%, transparent 70%);
+    filter: blur(40px);
+    animation: pulse 10s infinite alternate ease-in-out;
+    z-index: 0;
+  }
+  
+  // Analysis loader
+  .analysisLoader {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, rgba(59, 130, 246, 0) 0%, rgba(139, 92, 246, 0.8) 50%, rgba(59, 130, 246, 0) 100%);
+    animation: spin 1.5s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .analysisInner {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #111827;
+    }
+  }
+  
+  // Loading bar animation
+  .loadingBar {
+    height: 100%;
+    width: 30%;
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.7), rgba(139, 92, 246, 0.7));
+    border-radius: full;
+    animation: loadingAnimation 2s infinite;
+  }
+  
+  // Spin animation
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  // Loading bar animation
+  @keyframes loadingAnimation {
+    0% {
+      width: 0%;
+      margin-left: 0;
+    }
+    50% {
+      width: 40%;
+    }
+    100% {
+      width: 0%;
+      margin-left: 100%;
+    }
+  }
+  
