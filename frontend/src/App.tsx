@@ -1,10 +1,10 @@
-<<<<<<< HEAD
+// <<<<<<< HEAD
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-=======
+// =======
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
->>>>>>> 937cb9e5a2effa454dd38eed39fcb8c959ffbc16
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
+// >>>>>>> 937cb9e5a2effa454dd38eed39fcb8c959ffbc16
 import Index from "./pages/Index";
 import Analysis from "./pages/Analysis";
 import Jobs from "./pages/Jobs";
