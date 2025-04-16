@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // //Professional Resume Templates
 
 // import React, { useState } from "react";
@@ -16,6 +17,24 @@
 //   FileSearch,
 // } from "lucide-react";
 // import Pricing from "@/components/Pricing";
+=======
+                                                          //Professional Resume Templates
+
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { uploadFileToServer } from "../utils/fileUpload";
+import {
+  Eye,
+  Upload,
+  CheckCircle,
+  FileText,
+  Calendar,
+  AlertCircle,
+  X,
+} from "lucide-react";
+>>>>>>> 937cb9e5a2effa454dd38eed39fcb8c959ffbc16
 
 // const Templates = () => {
 //   const [showUploadSection, setShowUploadSection] = useState(false);
@@ -117,12 +136,62 @@
 //     ],
 //   };
 
+<<<<<<< HEAD
 //   // Handle file upload
 //   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 //     if (e.target.files && e.target.files[0]) {
 //       setUploadedFileName(e.target.files[0].name);
 //     }
 //   };
+=======
+  // Handle file upload
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [currentTemplate, setCurrentTemplate] = useState('iit');
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !e.target.files[0]) return;
+
+    const file = e.target.files[0];
+    
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      setUploadError('File size exceeds 5MB limit');
+      return;
+    }
+
+    setUploadedFileName(file.name);
+    setIsUploading(true);
+    setUploadError(null);
+    
+    try {
+      // Get the currently selected template from tabs
+      const activeTemplate = templateCategories.find(
+        cat => templates[cat.id].some(t => t.id === selectedTemplate)
+      )?.id || 'iit';
+      setCurrentTemplate(activeTemplate);
+
+      const result = await uploadFileToServer(file, activeTemplate);
+      
+      if (result.status !== 'success') {
+        setUploadError(result.message || 'Upload failed');
+        setUploadedFileName("");
+        return;
+      }
+
+      // Show success message
+      alert(`File uploaded successfully!\nTemplate: ${result.template}`);
+      
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Upload failed';
+      console.error('Upload error:', error);
+      setUploadError(errorMessage);
+      setUploadedFileName("");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+>>>>>>> 937cb9e5a2effa454dd38eed39fcb8c959ffbc16
 
 //   // Handle direct file browsing from the Browse Template Collection section
 //   const handleBrowseTemplateUpload = (
@@ -145,11 +214,36 @@
 //     setShowProcessedResult(false);
 //   };
 
+<<<<<<< HEAD
 //   // Handle resume submission
 //   const handleSubmitResume = () => {
 //     // This would connect to your backend processing
 //     setShowProcessedResult(true);
 //   };
+=======
+  const testApiConnection = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/');
+      const data = await response.json();
+      alert(`API Connection Test: ${data.message}\nStatus: ${response.status}`);
+    } catch (error) {
+      alert(`API Connection Failed: ${error}`);
+    }
+  };
+
+  return (
+    <div className="relative py-16 overflow-hidden">
+      <button 
+        onClick={testApiConnection}
+        className="fixed bottom-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg z-50"
+      >
+        Test API Connection
+      </button>
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 opacity-95 z-0"></div>
+      <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-full blur-3xl"></div>
+>>>>>>> 937cb9e5a2effa454dd38eed39fcb8c959ffbc16
 
 //   // Handle resume download
 //   const handleDownloadResume = () => {
@@ -271,6 +365,7 @@
 //                       </div>
 //                     </div>
 
+<<<<<<< HEAD
 //                     <div className="rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20 transition-transform hover:-translate-y-2 duration-300 md:order-1">
 //                       <img
 //                         src="https://brandpacks.com/wp-content/uploads/2021/09/best-resume-templates-for-adobe-indesign.jpg"
@@ -279,6 +374,74 @@
 //                       />
 //                     </div>
 //                   </div>
+=======
+              <div className="mb-8">
+                <h4 className="text-xl font-bold text-white mb-4">
+                  Step 1: Upload your existing resume
+                </h4>
+                <div className="border-2 border-dashed border-white/20 rounded-xl p-8 text-center bg-white/5">
+                  {isUploading ? (
+                    <div className="flex flex-col items-center">
+                      <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mb-4"></div>
+                      <p className="text-blue-100">Uploading {uploadedFileName}...</p>
+                    </div>
+                  ) : !uploadedFileName ? (
+                    <div>
+                      <Upload className="h-16 w-16 text-blue-400 mx-auto mb-4" />
+                      <p className="text-blue-100 mb-4">
+                        Drag and drop your resume file here, or click to browse
+                      </p>
+                      {uploadError && (
+                        <div className="flex items-center justify-center mb-4 p-2 bg-red-900/20 rounded-lg">
+                          <AlertCircle className="h-5 w-5 text-red-400 mr-2" />
+                          <span className="text-red-200">{uploadError}</span>
+                        </div>
+                      )}
+                      <label className="cursor-pointer">
+                        <Button 
+                          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
+                          disabled={isUploading}
+                        >
+                          {isUploading ? 'Uploading...' : 'Browse Files'}
+                        </Button>
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept=".pdf,.docx,.doc,.txt"
+                          onChange={handleFileUpload}
+                          disabled={isUploading}
+                        />
+                      </label>
+                    </div>
+                  ) : (
+                    <div>
+                      <CheckCircle className="h-16 w-16 text-green-400 mx-auto mb-4" />
+                      <p className="text-green-100 mb-4">
+                        File uploaded successfully!
+                      </p>
+                      <div className="flex items-center justify-center mb-2">
+                        <FileText className="mr-2 h-5 w-5 text-white" />
+                        <span className="text-white mr-3">
+                          {uploadedFileName}
+                        </span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="border-red-400/30 text-red-400 hover:bg-red-900/20"
+                          onClick={() => setUploadedFileName("")}
+                          disabled={isUploading}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <p className="text-blue-100 text-sm">
+                        Selected template: {currentTemplate.toUpperCase()}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+>>>>>>> 937cb9e5a2effa454dd38eed39fcb8c959ffbc16
 
 //                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 //                     <div className="flex flex-col items-center md:items-start">
